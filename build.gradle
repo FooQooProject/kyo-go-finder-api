@@ -1,0 +1,37 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.1'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+	id 'groovy'
+}
+
+group = 'com.fooqoo56.kyo-go-finder.api'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation (
+			'org.springframework.boot:spring-boot-starter-web',
+			'org.spockframework:spock-core:1.1-groovy-2.4-rc-2',
+			'org.springframework.boot:spring-boot-starter-actuator'
+	)
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation (
+			'org.springframework.boot:spring-boot-starter-test',
+			'org.spockframework:spock-core:1.1-groovy-2.4-rc-2',
+			'org.spockframework:spock-spring:1.1-groovy-2.4-rc-2',
+			'cglib:cglib-nodep:3.2.4'
+	)
+}
