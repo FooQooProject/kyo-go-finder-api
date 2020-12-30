@@ -1,7 +1,7 @@
 package com.fooqoo56.kyogofinder.api.infrastracture.repositoryimpl;
 
 import com.fooqoo56.kyogofinder.api.domain.model.User;
-import com.fooqoo56.kyogofinder.api.domain.repository.FireStoreRepository;
+import com.fooqoo56.kyogofinder.api.domain.repository.FirestoreRepository;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 @Slf4j
 @Profile("!test")
-public class FireStoreRepositoryImpl implements FireStoreRepository {
+public class FirestoreRepositoryImpl implements FirestoreRepository {
 
     final Firestore firestore;
 

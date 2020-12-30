@@ -3,7 +3,7 @@ package com.fooqoo56.kyogofinder.api.domain.repository;
 import com.fooqoo56.kyogofinder.api.domain.model.User;
 import java.util.concurrent.ExecutionException;
 
-public interface FireStoreRepository {
+public interface FirestoreRepository {
 
     /**
      * ユーザの取得

@@ -1,7 +1,7 @@
 package com.fooqoo56.kyogofinder.api.infrastracture.repositoryimpl;
 
 import com.fooqoo56.kyogofinder.api.domain.model.User;
-import com.fooqoo56.kyogofinder.api.domain.repository.FireStoreRepository;
+import com.fooqoo56.kyogofinder.api.domain.repository.FirestoreRepository;
 import java.util.concurrent.ExecutionException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 @Slf4j
 @Profile("test")
-public class MockFireStoreRepositoryImpl implements FireStoreRepository {
+public class MockFirestoreRepositoryImpl implements FirestoreRepository {
 
     /***
      * {@inheritDoc}
