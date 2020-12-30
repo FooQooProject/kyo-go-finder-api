@@ -39,6 +39,9 @@ public class User implements Serializable {
 
     Boolean deleteFlag = false;
 
+    /**
+     * デフォルトコンストラクタ
+     */
     public User() {
         id = -1;
         name = "";
