@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### firebase ###
+kyo-go-finder-firebase-service-account.json

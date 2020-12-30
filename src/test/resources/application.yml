@@ -4,17 +4,14 @@ spring:
   mvc:
     throw-exception-if-no-handler-found: true
   profiles:
-    active: default
+    active: test
   web:
     resources:
       add-mappings: false
   cloud:
     gcp:
       firestore:
-        enabled: true
-        credentials:
-          location: classpath:kyo-go-finder-firebase-service-account.json
-      project-id: kyo-go-finder
+        enabled: false
 
 server:
   max-http-header-size: 8KB

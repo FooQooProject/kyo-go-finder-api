@@ -22,8 +22,9 @@ repositories {
 dependencies {
 	implementation (
 			'org.springframework.boot:spring-boot-starter-web',
-			'org.spockframework:spock-core:1.1-groovy-2.4-rc-2',
-			'org.springframework.boot:spring-boot-starter-actuator'
+			'org.springframework.boot:spring-boot-starter-actuator',
+			'org.springframework.cloud:spring-cloud-gcp-starter-data-firestore:1.2.6.RELEASE',
+			"org.springframework.boot:spring-boot-starter-validation"
 	)
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
