@@ -50,6 +50,12 @@ public class User implements Serializable {
         profileImageUrlHttps = "";
     }
 
+    /**
+     * リクエストからdatastore形式への変換
+     *
+     * @param request リクエスト
+     * @return datastore形式
+     */
     public static User convertFromRequestToUser(final UserRequest request) {
         return User.builder()
                 .id(request.getId())
