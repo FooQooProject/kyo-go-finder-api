@@ -2,7 +2,7 @@ package com.fooqoo56.kyogofinder.api.presentation.controller
 
 import com.fooqoo56.kyogofinder.api.application.service.UserService
 import com.fooqoo56.kyogofinder.api.domain.model.User
-import com.fooqoo56.kyogofinder.api.presentation.dto.request.UserRequest
+import com.fooqoo56.kyogofinder.api.presentation.dto.form.UserRequest
 import com.fooqoo56.kyogofinder.api.presentation.dto.response.ApiResponse
 import com.google.cloud.firestore.Firestore
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc

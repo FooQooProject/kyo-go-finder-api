@@ -11,8 +11,8 @@ public class KyoGoFinderApplication {
      *
      * @param args 引数
      */
-	public static void main(final String[] args) {
-		SpringApplication.run(KyoGoFinderApplication.class, args);
-	}
+    public static void main(final String[] args) {
+        SpringApplication.run(KyoGoFinderApplication.class, args);
+    }
 
 }

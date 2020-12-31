@@ -3,7 +3,7 @@ package com.fooqoo56.kyogofinder.api.application.service;
 import com.fooqoo56.kyogofinder.api.application.exception.FirestoreException;
 import com.fooqoo56.kyogofinder.api.domain.model.User;
 import com.fooqoo56.kyogofinder.api.domain.repository.FirestoreRepository;
-import com.fooqoo56.kyogofinder.api.presentation.dto.request.UserRequest;
+import com.fooqoo56.kyogofinder.api.presentation.dto.form.UserRequest;
 import com.fooqoo56.kyogofinder.api.presentation.dto.response.ApiResponse;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

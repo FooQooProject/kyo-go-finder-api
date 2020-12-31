@@ -2,7 +2,7 @@ package com.fooqoo56.kyogofinder.api.presentation.controller;
 
 import com.fooqoo56.kyogofinder.api.application.service.UserService;
 import com.fooqoo56.kyogofinder.api.domain.model.User;
-import com.fooqoo56.kyogofinder.api.presentation.dto.request.UserRequest;
+import com.fooqoo56.kyogofinder.api.presentation.dto.form.UserRequest;
 import com.fooqoo56.kyogofinder.api.presentation.dto.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class UserController {
      * @param userRequest ユーザ情報
      * @return APIレスポンス
      */
-    @PostMapping(path = "/user")
+    @PostMapping(path = "/user/")
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<User> postUser(@Validated final UserRequest userRequest) {
         return userService.postUser(userRequest);

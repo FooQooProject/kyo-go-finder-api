@@ -1,5 +1,6 @@
 package com.fooqoo56.kyogofinder.api.infrastracture.repositoryimpl;
 
+import com.fooqoo56.kyogofinder.api.domain.model.Relation;
 import com.fooqoo56.kyogofinder.api.domain.model.User;
 import com.fooqoo56.kyogofinder.api.domain.repository.FirestoreRepository;
 import com.google.api.core.ApiFuture;
@@ -18,9 +19,11 @@ import org.springframework.stereotype.Repository;
 @Profile("!test")
 public class FirestoreRepositoryImpl implements FirestoreRepository {
 
+    private static final String BASE_PATH = "/kyogo/v1";
+
     final Firestore firestore;
 
-    /***
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -31,7 +34,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
         log.info("Update time: " + writeResult.getUpdateTime());
     }
 
-    /***
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -43,12 +46,94 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     }
 
     /**
-     * datastoreのパスの取得
+     * {@inheritDoc}
+     */
+    @Override
+    public void writeRelationUser(final Relation relation, final Integer userId)
+            throws ExecutionException, InterruptedException {
+        final WriteResult writeResult =
+                this.firestore.document(getPathOfRelationUser(userId)).set(relation)
+                        .get();
+
+        log.info("Update time: " + writeResult.getUpdateTime());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void writeRelationFollower(final Relation relation, final Integer userId,
+                                      final Integer followerId)
+            throws ExecutionException, InterruptedException {
+
+        final WriteResult writeResult =
+                this.firestore.document(getPathOfRelationFollower(userId, followerId)).set(relation)
+                        .get();
+
+        log.info("Update time: " + writeResult.getUpdateTime());
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void writeRelationFollowerFriend(
+            final Relation relation, final Integer userId, final Integer followerId,
+            final Integer friendId) throws ExecutionException, InterruptedException {
+
+        final WriteResult writeResult =
+                this.firestore
+                        .document(getPathOfRelationFollowerFriend(userId, followerId, friendId))
+                        .set(relation)
+                        .get();
+
+        log.info("Update time: " + writeResult.getUpdateTime());
+
+    }
+
+    /**
+     * datastoreのuserドキュメントパスの取得
      *
      * @param id ユーザID
      * @return パス
      */
     private String getPathOfUser(final Integer id) {
-        return "user/" + id.toString();
+        return String.format(BASE_PATH + "user/%s", id);
+    }
+
+    /**
+     * datastoreのrelationドキュメントパスの取得
+     *
+     * @param id ユーザID
+     * @return パス
+     */
+    private String getPathOfRelationUser(final Integer id) {
+        return String.format(BASE_PATH + "relation/%s", id);
+    }
+
+    /**
+     * datastoreのrelationドキュメントのfollowerパスの取得
+     *
+     * @param id         ユーザID
+     * @param followerId フォロワーのユーザID
+     * @return パス
+     */
+    private String getPathOfRelationFollower(final Integer id, final Integer followerId) {
+        return String.format(BASE_PATH + "relation/%s/follower/%s", id, followerId);
+    }
+
+    /**
+     * datastoreのrelationドキュメントのfollowerサブコレクションのfriendパスの取得
+     *
+     * @param id               ユーザID
+     * @param followerId       フォロワーのユーザID
+     * @param followerFriendId フォロワーのフォローしてるユーザのID
+     * @return パス
+     */
+    private String getPathOfRelationFollowerFriend(final Integer id, final Integer followerId,
+                                                   final Integer followerFriendId) {
+        return String.format(BASE_PATH + "relation/%s/follower/%s/friend/%s", id, followerId,
+                followerFriendId);
     }
 }

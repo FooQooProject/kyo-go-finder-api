@@ -1,7 +1,10 @@
 package com.fooqoo56.kyogofinder.api.domain.model;
 
-import com.fooqoo56.kyogofinder.api.presentation.dto.request.UserRequest;
+import com.fooqoo56.kyogofinder.api.presentation.dto.form.UserRequest;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import javax.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,6 +41,8 @@ public class User implements Serializable {
     String profileImageUrlHttps;
 
     Boolean deleteFlag = false;
+
+    LocalDate updatedAt = ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate();
 
     /**
      * デフォルトコンストラクタ
