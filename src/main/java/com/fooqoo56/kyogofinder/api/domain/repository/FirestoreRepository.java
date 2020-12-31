@@ -26,14 +26,36 @@ public interface FirestoreRepository {
     void writeUser(final User user) throws ExecutionException, InterruptedException;
 
     /**
+     * Relationのユーザ取得
+     *
+     * @param userId ユーザID
+     * @throws ExecutionException   ExecutionException
+     * @throws InterruptedException InterruptedException
+     */
+    Relation getRelationUser(final Integer userId)
+            throws ExecutionException, InterruptedException;
+
+    /**
      * Relationの保存
      *
      * @param relation タスクの保存情報
-     * @param userId
+     * @param userId   ユーザID
      * @throws ExecutionException   ExecutionException
      * @throws InterruptedException InterruptedException
      */
     void writeRelationUser(final Relation relation, final Integer userId)
+            throws ExecutionException, InterruptedException;
+
+    /**
+     * Relationのfollowerの取得
+     *
+     * @param userId     ユーザID
+     * @param followerId フォロワーのユーザID
+     * @throws ExecutionException   ExecutionException
+     * @throws InterruptedException InterruptedException
+     */
+    Relation getRelationFollower(final Integer userId,
+                                 final Integer followerId)
             throws ExecutionException, InterruptedException;
 
     /**
@@ -47,6 +69,19 @@ public interface FirestoreRepository {
      */
     void writeRelationFollower(final Relation relation, final Integer userId,
                                final Integer followerId)
+            throws ExecutionException, InterruptedException;
+
+    /**
+     * Relationのfollowerのfriendの取得
+     *
+     * @param userId     ユーザID
+     * @param followerId フォロワーのユーザID
+     * @param friendId   フォロワーのフレンドのユーザID
+     * @throws ExecutionException   ExecutionException
+     * @throws InterruptedException InterruptedException
+     */
+    Relation getRelationFollowerFriend(final Integer userId,
+                                       final Integer followerId, final Integer friendId)
             throws ExecutionException, InterruptedException;
 
     /**

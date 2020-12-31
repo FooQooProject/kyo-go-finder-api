@@ -7,6 +7,7 @@ import com.fooqoo56.kyogofinder.api.presentation.dto.form.UserRequest;
 import com.fooqoo56.kyogofinder.api.presentation.dto.response.ApiResponse;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,21 @@ public class UserService {
             return getApiResponse(user, stopWatch);
         } catch (final Exception e) {
             throw new FirestoreException(e.getMessage());
+        }
+    }
+
+    /**
+     * ユーザが存在するか
+     *
+     * @param id ユーザID
+     * @return ユーザの有無
+     */
+    public boolean isExistUser(final Integer id) {
+        try {
+            final User user = fireStoreRepository.getUser(id);
+            return Objects.nonNull(user);
+        } catch (final Exception e) {
+            return false;
         }
     }
 

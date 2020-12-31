@@ -1,11 +1,11 @@
 package com.fooqoo56.kyogofinder.api.presentation.controller.advice;
 
 import com.fooqoo56.kyogofinder.api.application.exception.FirestoreException;
+import com.fooqoo56.kyogofinder.api.application.exception.ValidationException;
 import com.fooqoo56.kyogofinder.api.presentation.dto.response.ErrorResponse;
 import java.net.SocketTimeoutException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
-import javax.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;

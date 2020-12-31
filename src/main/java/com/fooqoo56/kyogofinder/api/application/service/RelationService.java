@@ -9,6 +9,7 @@ import com.fooqoo56.kyogofinder.api.presentation.dto.form.RelationRequest;
 import com.fooqoo56.kyogofinder.api.presentation.dto.response.ApiResponse;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,21 @@ public class RelationService {
     }
 
     /**
+     * Relationにユーザが存在するか
+     *
+     * @param id ユーザID
+     * @return ユーザの有無
+     */
+    public boolean isExistRelationUser(final Integer id) {
+        try {
+            final Relation relation = fireStoreRepository.getRelationUser(id);
+            return Objects.nonNull(relation);
+        } catch (final Exception e) {
+            return false;
+        }
+    }
+
+    /**
      * Relationのfollowerの新規作成
      *
      * @param request ユーザ情報
@@ -70,6 +86,21 @@ public class RelationService {
             return new ApiResponse<>(latency, requestDate, request);
         } catch (final Exception e) {
             throw new FirestoreException(e.getMessage());
+        }
+    }
+
+    /**
+     * Relationにユーザが存在するか
+     *
+     * @param id ユーザID
+     * @return ユーザの有無
+     */
+    public boolean isExistRelationFollower(final Integer id, final Integer followerId) {
+        try {
+            final Relation relation = fireStoreRepository.getRelationFollower(id, followerId);
+            return Objects.nonNull(relation);
+        } catch (final Exception e) {
+            return false;
         }
     }
 
@@ -98,6 +129,23 @@ public class RelationService {
             return new ApiResponse<>(latency, requestDate, request);
         } catch (final Exception e) {
             throw new FirestoreException(e.getMessage());
+        }
+    }
+
+    /**
+     * RelationのFollowerのFriendにユーザが存在するか
+     *
+     * @param id ユーザID
+     * @return ユーザの有無
+     */
+    public boolean isExistRelationFollowerFriend(final Integer id, final Integer followerId,
+                                                 final Integer followerFriendId) {
+        try {
+            final Relation relation =
+                    fireStoreRepository.getRelationFollowerFriend(id, followerId, followerFriendId);
+            return Objects.nonNull(relation);
+        } catch (final Exception e) {
+            return false;
         }
     }
 }

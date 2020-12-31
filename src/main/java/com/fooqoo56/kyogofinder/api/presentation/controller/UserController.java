@@ -40,7 +40,7 @@ public class UserController {
      * @param userRequest ユーザ情報
      * @return APIレスポンス
      */
-    @PostMapping(path = "/user/")
+    @PostMapping(path = "/user")
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<User> postUser(@Validated final UserRequest userRequest) {
         return userService.postUser(userRequest);

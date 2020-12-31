@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 @Profile("!test")
 public class FirestoreRepositoryImpl implements FirestoreRepository {
 
-    private static final String BASE_PATH = "/kyogo/v1";
+    private static final String BASE_PATH = "kyogo/v1/";
 
     final Firestore firestore;
 
@@ -62,6 +62,18 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
+    public Relation getRelationUser(final Integer userId)
+            throws ExecutionException, InterruptedException {
+        final ApiFuture<DocumentSnapshot> documentFuture =
+                this.firestore.document(getPathOfRelationUser(userId)).get();
+
+        return documentFuture.get().toObject(Relation.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void writeRelationFollower(final Relation relation, final Integer userId,
                                       final Integer followerId)
             throws ExecutionException, InterruptedException {
@@ -72,6 +84,19 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
 
         log.info("Update time: " + writeResult.getUpdateTime());
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Relation getRelationFollower(final Integer userId, final Integer followerId)
+            throws ExecutionException, InterruptedException {
+
+        final ApiFuture<DocumentSnapshot> documentFuture =
+                this.firestore.document(getPathOfRelationFollower(userId, followerId)).get();
+
+        return documentFuture.get().toObject(Relation.class);
     }
 
     /**
@@ -90,6 +115,22 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
 
         log.info("Update time: " + writeResult.getUpdateTime());
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Relation getRelationFollowerFriend(final Integer userId, final Integer followerId,
+                                              final Integer friendId)
+            throws ExecutionException, InterruptedException {
+
+        final ApiFuture<DocumentSnapshot> documentFuture =
+                this.firestore
+                        .document(getPathOfRelationFollowerFriend(userId, followerId, friendId))
+                        .get();
+
+        return documentFuture.get().toObject(Relation.class);
     }
 
     /**

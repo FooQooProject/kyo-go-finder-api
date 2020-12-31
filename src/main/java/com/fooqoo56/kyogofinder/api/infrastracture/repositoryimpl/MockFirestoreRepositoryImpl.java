@@ -43,6 +43,15 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
+    public Relation getRelationUser(final Integer userId)
+            throws ExecutionException, InterruptedException {
+        return new Relation();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void writeRelationFollower(final Relation relation, final Integer userId,
                                       final Integer followerId)
             throws ExecutionException, InterruptedException {
@@ -53,9 +62,28 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
+    public Relation getRelationFollower(final Integer userId, final Integer followerId)
+            throws ExecutionException, InterruptedException {
+        return new Relation();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void writeRelationFollowerFriend(
             final Relation relation, final Integer userId, final Integer followerId,
             final Integer friendId) throws ExecutionException, InterruptedException {
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Relation getRelationFollowerFriend(final Integer userId, final Integer followerId,
+                                              final Integer friendId)
+            throws ExecutionException, InterruptedException {
+        return new Relation();
     }
 }

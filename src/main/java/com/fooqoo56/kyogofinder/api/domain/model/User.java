@@ -2,7 +2,6 @@ package com.fooqoo56.kyogofinder.api.domain.model;
 
 import com.fooqoo56.kyogofinder.api.presentation.dto.form.UserRequest;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import javax.validation.constraints.Min;
@@ -42,7 +41,7 @@ public class User implements Serializable {
 
     Boolean deleteFlag = false;
 
-    LocalDate updatedAt = ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate();
+    Long updatedAt = ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).toEpochSecond();
 
     /**
      * デフォルトコンストラクタ
