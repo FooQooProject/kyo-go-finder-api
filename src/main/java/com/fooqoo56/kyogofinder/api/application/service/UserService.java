@@ -9,13 +9,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class UserService {
 
     final FirestoreRepository fireStoreRepository;
@@ -43,7 +41,8 @@ public class UserService {
      * @param request ユーザ情報
      * @return APIレスポンス
      */
-    public ApiResponse<User> postUser(final UserRequest request, final Integer userId) throws FirestoreException {
+    public ApiResponse<User> postUser(final UserRequest request, final Integer userId)
+            throws FirestoreException {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
