@@ -23,8 +23,8 @@ jobs:
 
       - name: GAE deploy
         run: |
-          echo $GCLOUD_SERVICE_KEY | base64 -d > ./gcloud-service-key.json
-          gcloud auth activate-service-account --key-file ./gcloud-service-key.json
+          echo $GCLOUD_SERVICE_KEY | base64 -d > ./src/main/resources/kyo-go-finder-firebase-service-account.json
+          gcloud auth activate-service-account --key-file ./src/main/resources/kyo-go-finder-firebase-service-account.json
           gradle appengineDeploy --stacktrace
         env:
           CI: true
