@@ -3,12 +3,6 @@ package com.fooqoo56.kyogofinder.api.application.service;
 import com.fooqoo56.kyogofinder.api.application.exception.FirestoreException;
 import com.fooqoo56.kyogofinder.api.domain.model.Relation;
 import com.fooqoo56.kyogofinder.api.domain.repository.FirestoreRepository;
-import com.fooqoo56.kyogofinder.api.presentation.dto.form.FollowerFriendRequest;
-import com.fooqoo56.kyogofinder.api.presentation.dto.form.FollowerRequest;
-import com.fooqoo56.kyogofinder.api.presentation.dto.form.RelationRequest;
-import com.fooqoo56.kyogofinder.api.presentation.dto.response.ApiResponse;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,24 +19,14 @@ public class RelationService {
     /**
      * Relationの新規作成
      *
-     * @param request ユーザ情報
-     * @return APIレスポンス
+     * @param userId ユーザID
+     * @throws FirestoreException FireStoreの独自例外
      */
-    public ApiResponse<RelationRequest> createRelation(final RelationRequest request)
+    public void createRelation(final Integer userId)
             throws FirestoreException {
-        final StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-
-        final Integer userId = request.getId();
 
         try {
             fireStoreRepository.writeRelationUser(new Relation(), userId);
-
-            final LocalDateTime requestDate = LocalDateTime.now();
-            final BigDecimal latency = BigDecimal.valueOf(stopWatch.getTotalTimeSeconds());
-
-
-            return new ApiResponse<>(latency, requestDate, request);
         } catch (final Exception e) {
             throw new FirestoreException(e.getMessage());
         }
@@ -66,31 +50,25 @@ public class RelationService {
     /**
      * Relationのfollowerの新規作成
      *
-     * @param request ユーザ情報
-     * @return APIレスポンス
+     * @param userId     ユーザ情報
+     * @param followerId フォロワーのID
+     * @throws FirestoreException FireStoreの独自例外
      */
-    public ApiResponse<FollowerRequest> createFollower(final FollowerRequest request)
+    public void createFollower(final Integer userId, final Integer followerId)
             throws FirestoreException {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
-        final Integer userId = request.getId();
-
         try {
             fireStoreRepository
-                    .writeRelationFollower(new Relation(), userId, request.getFollowerId());
-
-            final LocalDateTime requestDate = LocalDateTime.now();
-            final BigDecimal latency = BigDecimal.valueOf(stopWatch.getTotalTimeSeconds());
-
-            return new ApiResponse<>(latency, requestDate, request);
+                    .writeRelationFollower(new Relation(), userId, followerId);
         } catch (final Exception e) {
             throw new FirestoreException(e.getMessage());
         }
     }
 
     /**
-     * Relationにユーザが存在するか
+     * Relationのフォロワーにユーザが存在するか
      *
      * @param id ユーザID
      * @return ユーザの有無
@@ -107,26 +85,21 @@ public class RelationService {
     /**
      * Relationのfollowerのfriendの新規作成
      *
-     * @param request ユーザ情報
-     * @return APIレスポンス
+     * @param userId           ユーザID
+     * @param followerId       フォロワーのユーザID
+     * @param followerFriendId フォロワーのフォローユーザのID
+     * @throws FirestoreException FireStoreの独自例外
      */
-    public ApiResponse<FollowerFriendRequest> createFollowerFriend(
-            final FollowerFriendRequest request)
+    public void createFollowerFriend(
+            final Integer userId, final Integer followerId, final Integer followerFriendId)
             throws FirestoreException {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
-        final Integer userId = request.getId();
-
         try {
             fireStoreRepository
-                    .writeRelationFollowerFriend(new Relation(), userId, request.getFollowerId(),
-                            request.getFollowerFriendId());
-
-            final LocalDateTime requestDate = LocalDateTime.now();
-            final BigDecimal latency = BigDecimal.valueOf(stopWatch.getTotalTimeSeconds());
-
-            return new ApiResponse<>(latency, requestDate, request);
+                    .writeRelationFollowerFriend(new Relation(), userId, followerId,
+                            followerFriendId);
         } catch (final Exception e) {
             throw new FirestoreException(e.getMessage());
         }

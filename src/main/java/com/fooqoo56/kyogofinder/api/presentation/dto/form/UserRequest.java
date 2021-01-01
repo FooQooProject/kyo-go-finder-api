@@ -2,7 +2,6 @@ package com.fooqoo56.kyogofinder.api.presentation.dto.form;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fooqoo56.kyogofinder.api.presentation.validation.Id;
 import java.io.Serializable;
 import javax.validation.constraints.Min;
 import lombok.Data;
@@ -14,9 +13,6 @@ import org.springframework.lang.NonNull;
 public class UserRequest implements Serializable {
 
     private static final long serialVersionUID = 649628293446751739L;
-    @NonNull
-    @Id
-    Integer id;
 
     @NonNull
     String name;

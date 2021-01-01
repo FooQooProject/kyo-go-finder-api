@@ -43,14 +43,14 @@ public class UserService {
      * @param request ユーザ情報
      * @return APIレスポンス
      */
-    public ApiResponse<User> postUser(final UserRequest request) throws FirestoreException {
+    public ApiResponse<User> postUser(final UserRequest request, final Integer userId) throws FirestoreException {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
         final User user = User.convertFromRequestToUser(request);
 
         try {
-            fireStoreRepository.writeUser(user);
+            fireStoreRepository.writeUser(user, userId);
             return getApiResponse(user, stopWatch);
         } catch (final Exception e) {
             throw new FirestoreException(e.getMessage());

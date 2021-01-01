@@ -19,7 +19,7 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeUser(final User user) throws ExecutionException, InterruptedException {
+    public void writeUser(final User user, final Integer userId) throws ExecutionException, InterruptedException {
     }
 
     /**

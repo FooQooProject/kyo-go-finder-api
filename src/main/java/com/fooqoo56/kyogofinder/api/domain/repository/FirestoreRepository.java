@@ -23,7 +23,7 @@ public interface FirestoreRepository {
      * @throws ExecutionException   ExecutionException
      * @throws InterruptedException InterruptedException
      */
-    void writeUser(final User user) throws ExecutionException, InterruptedException;
+    void writeUser(final User user, final Integer userId) throws ExecutionException, InterruptedException;
 
     /**
      * Relationのユーザ取得

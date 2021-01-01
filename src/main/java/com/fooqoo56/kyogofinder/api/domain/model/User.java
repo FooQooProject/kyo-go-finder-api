@@ -18,9 +18,6 @@ public class User implements Serializable {
     private static final long serialVersionUID = 8669195223323024928L;
 
     @NonNull
-    Integer id;
-
-    @NonNull
     String name;
 
     @NonNull
@@ -47,7 +44,6 @@ public class User implements Serializable {
      * デフォルトコンストラクタ
      */
     public User() {
-        id = -1;
         name = "";
         screenName = "";
         description = "";
@@ -65,7 +61,6 @@ public class User implements Serializable {
      */
     public static User convertFromRequestToUser(final UserRequest request) {
         return User.builder()
-                .id(request.getId())
                 .name(request.getName())
                 .screenName(request.getScreenName())
                 .description(request.getDescription())

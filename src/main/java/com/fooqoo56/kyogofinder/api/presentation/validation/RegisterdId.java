@@ -11,8 +11,8 @@ import javax.validation.Payload;
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = {IdValidator.class})
-public @interface Id {
+@Constraint(validatedBy = {RegisteredIdValidator.class})
+public @interface RegisterdId {
 
     String message() default "{validation.comment}";
 
@@ -24,6 +24,6 @@ public @interface Id {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @interface List {
-        Id[] value();
+        RegisterdId[] value();
     }
 }
