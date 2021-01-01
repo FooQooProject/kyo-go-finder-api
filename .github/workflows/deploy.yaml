@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/implement
 
 env:
   GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
@@ -24,6 +23,7 @@ jobs:
       - name: GAE deploy
         run: |
           echo $GCLOUD_SERVICE_KEY | base64 -d > ./src/main/resources/kyo-go-finder-firebase-service-account.json
+          gcloud config set project kyo-go-finder
           gcloud auth activate-service-account --key-file ./src/main/resources/kyo-go-finder-firebase-service-account.json
           gradle appengineDeploy --stacktrace
         env:
