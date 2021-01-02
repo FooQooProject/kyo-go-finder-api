@@ -60,7 +60,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
         final CollectionReference collection = this.firestore.collection(BASE_PATH + "relation");
 
         ApiFuture<QuerySnapshot> querySnapshot = collection
-                .orderBy("updatedAt", Query.Direction.DESCENDING)
+                .orderBy("updatedAt", Query.Direction.ASCENDING)
                 .limit(1)
                 .get();
 
