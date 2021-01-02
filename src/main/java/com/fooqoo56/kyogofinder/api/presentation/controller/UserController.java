@@ -4,6 +4,7 @@ import com.fooqoo56.kyogofinder.api.application.exception.ValidationException;
 import com.fooqoo56.kyogofinder.api.application.service.RelationService;
 import com.fooqoo56.kyogofinder.api.application.service.UserService;
 import com.fooqoo56.kyogofinder.api.domain.model.User;
+import com.fooqoo56.kyogofinder.api.domain.model.UserIds;
 import com.fooqoo56.kyogofinder.api.presentation.dto.form.UserRequest;
 import com.fooqoo56.kyogofinder.api.presentation.dto.response.ApiResponse;
 import com.fooqoo56.kyogofinder.api.presentation.validation.RegisterdId;
@@ -31,15 +32,26 @@ public class UserController {
     private final RequestValidator validator;
 
     /**
-     * ユーザの取得
+     * ID指定のユーザの取得
      *
      * @param id ユーザID
      * @return APIレスポンス
      */
     @GetMapping(path = "/user/{id}")
     @ResponseBody
-    public ApiResponse<User> getUser(@PathVariable("id") final Integer id) {
+    public ApiResponse<User> getUser(@PathVariable("id") final String id) {
         return userService.getUser(id);
+    }
+
+    /**
+     * 条件指定のユーザの取得
+     *
+     * @return APIレスポンス
+     */
+    @GetMapping(path = "/user/oldest")
+    @ResponseBody
+    public ApiResponse<UserIds> getUser() {
+        return userService.getUsers();
     }
 
     /**
@@ -51,7 +63,7 @@ public class UserController {
      */
     @PostMapping(path = "/user/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<User> postUser(@PathVariable("id") final Integer id,
+    public ApiResponse<User> postUser(@PathVariable("id") final String id,
                                       final UserRequest userRequest) {
         final ApiResponse<User> response = userService.postUser(userRequest, id);
         relationService.createRelation(id);
@@ -69,8 +81,8 @@ public class UserController {
      */
     @PostMapping(path = "/user/{id}/follower/{followerId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<User> postUser(@PathVariable("id") @RegisterdId final Integer id,
-                                      @PathVariable("followerId") final Integer followerId,
+    public ApiResponse<User> postUser(@PathVariable("id") @RegisterdId final String id,
+                                      @PathVariable("followerId") final String followerId,
                                       final UserRequest userRequest) throws ValidationException {
         if (validator.validateFollowerRequest(id, followerId)) {
             final ApiResponse<User> response = userService.postUser(userRequest, followerId);
@@ -96,11 +108,11 @@ public class UserController {
      */
     @PostMapping(path = "/user/{id}/follower/{followerId}/friend/{followerFriendId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<User> postUser(@PathVariable("id") @RegisterdId final Integer id,
+    public ApiResponse<User> postUser(@PathVariable("id") @RegisterdId final String id,
                                       @PathVariable("followerId") @RegisterdId
-                                      final Integer followerId,
+                                      final String followerId,
                                       @PathVariable("followerFriendId")
-                                      final Integer followerFriendId,
+                                      final String followerFriendId,
                                       final UserRequest userRequest) throws ValidationException {
         if (validator.validateFollowerFriendRequest(id, followerId)) {
             final ApiResponse<User> response = userService.postUser(userRequest, followerFriendId);

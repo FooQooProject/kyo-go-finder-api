@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### firebase ###
-kyo-go-finder-firebase-service-account.json
+kyo-go-finder-firebase-adminsdk.json

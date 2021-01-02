@@ -2,8 +2,9 @@ package com.fooqoo56.kyogofinder.api.infrastracture.repositoryimpl;
 
 import com.fooqoo56.kyogofinder.api.domain.model.Relation;
 import com.fooqoo56.kyogofinder.api.domain.model.User;
+import com.fooqoo56.kyogofinder.api.domain.model.UserIds;
 import com.fooqoo56.kyogofinder.api.domain.repository.FirestoreRepository;
-import java.util.concurrent.ExecutionException;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -19,14 +20,14 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeUser(final User user, final Integer userId) throws ExecutionException, InterruptedException {
+    public void writeUser(final User user, final String userId) {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public User getUser(final Integer id) throws ExecutionException, InterruptedException {
+    public User getUser(final String id) {
         return new User();
     }
 
@@ -34,8 +35,15 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeRelationUser(final Relation relation, final Integer userId)
-            throws ExecutionException, InterruptedException {
+    public UserIds getOldestUserId() {
+        return new UserIds(new ArrayList<>());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void writeRelationUser(final Relation relation, final String userId) {
 
     }
 
@@ -43,8 +51,7 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public Relation getRelationUser(final Integer userId)
-            throws ExecutionException, InterruptedException {
+    public Relation getRelationUser(final String userId) {
         return new Relation();
     }
 
@@ -52,9 +59,8 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeRelationFollower(final Relation relation, final Integer userId,
-                                      final Integer followerId)
-            throws ExecutionException, InterruptedException {
+    public void writeRelationFollower(final Relation relation, final String userId,
+                                      final String followerId) {
 
     }
 
@@ -62,8 +68,7 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public Relation getRelationFollower(final Integer userId, final Integer followerId)
-            throws ExecutionException, InterruptedException {
+    public Relation getRelationFollower(final String userId, final String followerId) {
         return new Relation();
     }
 
@@ -72,8 +77,8 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      */
     @Override
     public void writeRelationFollowerFriend(
-            final Relation relation, final Integer userId, final Integer followerId,
-            final Integer friendId) throws ExecutionException, InterruptedException {
+            final Relation relation, final String userId, final String followerId,
+            final String friendId) {
 
     }
 
@@ -81,9 +86,8 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public Relation getRelationFollowerFriend(final Integer userId, final Integer followerId,
-                                              final Integer friendId)
-            throws ExecutionException, InterruptedException {
+    public Relation getRelationFollowerFriend(final String userId, final String followerId,
+                                              final String friendId) {
         return new Relation();
     }
 }

@@ -2,12 +2,18 @@ package com.fooqoo56.kyogofinder.api.infrastracture.repositoryimpl;
 
 import com.fooqoo56.kyogofinder.api.domain.model.Relation;
 import com.fooqoo56.kyogofinder.api.domain.model.User;
+import com.fooqoo56.kyogofinder.api.domain.model.UserIds;
 import com.fooqoo56.kyogofinder.api.domain.repository.FirestoreRepository;
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.Query;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -27,7 +33,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeUser(final User user, final Integer userId) throws ExecutionException, InterruptedException {
+    public void writeUser(final User user, final String userId)
+            throws ExecutionException, InterruptedException {
         final WriteResult writeResult =
                 this.firestore.document(getPathOfUser(userId)).set(user).get();
 
@@ -38,7 +45,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public User getUser(final Integer id) throws ExecutionException, InterruptedException {
+    public User getUser(final String id) throws ExecutionException, InterruptedException {
         final ApiFuture<DocumentSnapshot> documentFuture =
                 this.firestore.document(getPathOfUser(id)).get();
 
@@ -49,7 +56,27 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeRelationUser(final Relation relation, final Integer userId)
+    public UserIds getOldestUserId() throws ExecutionException, InterruptedException {
+        final CollectionReference collection = this.firestore.collection(BASE_PATH + "relation");
+
+        ApiFuture<QuerySnapshot> querySnapshot = collection
+                .orderBy("updatedAt", Query.Direction.ASCENDING)
+                .limit(1)
+                .get();
+
+        final List<String> userIds =
+                querySnapshot.get().getDocuments().stream().map(DocumentSnapshot::getId)
+                        .collect(
+                                Collectors.toList());
+
+        return new UserIds(userIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void writeRelationUser(final Relation relation, final String userId)
             throws ExecutionException, InterruptedException {
         final WriteResult writeResult =
                 this.firestore.document(getPathOfRelationUser(userId)).set(relation)
@@ -62,7 +89,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public Relation getRelationUser(final Integer userId)
+    public Relation getRelationUser(final String userId)
             throws ExecutionException, InterruptedException {
         final ApiFuture<DocumentSnapshot> documentFuture =
                 this.firestore.document(getPathOfRelationUser(userId)).get();
@@ -74,8 +101,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeRelationFollower(final Relation relation, final Integer userId,
-                                      final Integer followerId)
+    public void writeRelationFollower(final Relation relation, final String userId,
+                                      final String followerId)
             throws ExecutionException, InterruptedException {
 
         final WriteResult writeResult =
@@ -90,7 +117,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public Relation getRelationFollower(final Integer userId, final Integer followerId)
+    public Relation getRelationFollower(final String userId, final String followerId)
             throws ExecutionException, InterruptedException {
 
         final ApiFuture<DocumentSnapshot> documentFuture =
@@ -104,8 +131,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      */
     @Override
     public void writeRelationFollowerFriend(
-            final Relation relation, final Integer userId, final Integer followerId,
-            final Integer friendId) throws ExecutionException, InterruptedException {
+            final Relation relation, final String userId, final String followerId,
+            final String friendId) throws ExecutionException, InterruptedException {
 
         final WriteResult writeResult =
                 this.firestore
@@ -121,8 +148,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public Relation getRelationFollowerFriend(final Integer userId, final Integer followerId,
-                                              final Integer friendId)
+    public Relation getRelationFollowerFriend(final String userId, final String followerId,
+                                              final String friendId)
             throws ExecutionException, InterruptedException {
 
         final ApiFuture<DocumentSnapshot> documentFuture =
@@ -139,7 +166,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * @param id ユーザID
      * @return パス
      */
-    private String getPathOfUser(final Integer id) {
+    private String getPathOfUser(final String id) {
         return String.format(BASE_PATH + "user/%s", id);
     }
 
@@ -149,7 +176,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * @param id ユーザID
      * @return パス
      */
-    private String getPathOfRelationUser(final Integer id) {
+    private String getPathOfRelationUser(final String id) {
         return String.format(BASE_PATH + "relation/%s", id);
     }
 
@@ -160,7 +187,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * @param followerId フォロワーのユーザID
      * @return パス
      */
-    private String getPathOfRelationFollower(final Integer id, final Integer followerId) {
+    private String getPathOfRelationFollower(final String id, final String followerId) {
         return String.format(BASE_PATH + "relation/%s/follower/%s", id, followerId);
     }
 
@@ -172,8 +199,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * @param followerFriendId フォロワーのフォローしてるユーザのID
      * @return パス
      */
-    private String getPathOfRelationFollowerFriend(final Integer id, final Integer followerId,
-                                                   final Integer followerFriendId) {
+    private String getPathOfRelationFollowerFriend(final String id, final String followerId,
+                                                   final String followerFriendId) {
         return String.format(BASE_PATH + "relation/%s/follower/%s/friend/%s", id, followerId,
                 followerFriendId);
     }

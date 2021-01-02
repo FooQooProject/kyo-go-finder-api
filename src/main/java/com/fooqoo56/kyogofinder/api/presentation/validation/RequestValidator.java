@@ -18,7 +18,7 @@ public class RequestValidator {
      * @param followerId フォロワーのユーザID
      * @return バリデーション結果
      */
-    public boolean validateFollowerRequest(final Integer userId, final Integer followerId) {
+    public boolean validateFollowerRequest(final String userId, final String followerId) {
         return relationService.isExistRelationUser(userId) && isNotSelfFollow(userId, followerId);
     }
 
@@ -29,7 +29,7 @@ public class RequestValidator {
      * @param followerId フォロワーのユーザID
      * @return バリデーション結果
      */
-    public boolean validateFollowerFriendRequest(final Integer userId, final Integer followerId) {
+    public boolean validateFollowerFriendRequest(final String userId, final String followerId) {
         return relationService.isExistRelationFollower(userId, followerId) &&
                 isNotSelfFollow(userId, followerId);
 
@@ -42,7 +42,7 @@ public class RequestValidator {
      * @param followerId フォロー
      * @return 自身をフォローしてるないかどうか
      */
-    private boolean isNotSelfFollow(final Integer userId, final Integer followerId) {
+    private boolean isNotSelfFollow(final String userId, final String followerId) {
         if (Objects.nonNull(userId)) {
             return !userId.equals(followerId);
         }
