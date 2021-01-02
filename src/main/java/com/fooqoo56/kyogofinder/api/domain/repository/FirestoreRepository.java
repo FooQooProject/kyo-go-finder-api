@@ -2,6 +2,8 @@ package com.fooqoo56.kyogofinder.api.domain.repository;
 
 import com.fooqoo56.kyogofinder.api.domain.model.Relation;
 import com.fooqoo56.kyogofinder.api.domain.model.User;
+import com.fooqoo56.kyogofinder.api.domain.model.UserIds;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public interface FirestoreRepository {
@@ -12,9 +14,18 @@ public interface FirestoreRepository {
      * @param id ユーザID
      * @return ユーザ情報
      * @throws ExecutionException   ExecutionException
-     * @throws InterruptedException 　InterruptedException
+     * @throws InterruptedException InterruptedException
      */
     User getUser(final Integer id) throws ExecutionException, InterruptedException;
+
+    /**
+     * ユーザの取得(リスト)
+     *
+     * @return ユーザ情報
+     * @throws ExecutionException   ExecutionException
+     * @throws InterruptedException InterruptedException
+     */
+    UserIds getOldestUserId() throws ExecutionException, InterruptedException;
 
     /**
      * ユーザの保存
@@ -23,7 +34,8 @@ public interface FirestoreRepository {
      * @throws ExecutionException   ExecutionException
      * @throws InterruptedException InterruptedException
      */
-    void writeUser(final User user, final Integer userId) throws ExecutionException, InterruptedException;
+    void writeUser(final User user, final Integer userId)
+            throws ExecutionException, InterruptedException;
 
     /**
      * Relationのユーザ取得

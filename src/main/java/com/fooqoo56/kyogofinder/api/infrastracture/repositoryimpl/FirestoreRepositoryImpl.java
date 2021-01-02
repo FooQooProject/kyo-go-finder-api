@@ -2,12 +2,18 @@ package com.fooqoo56.kyogofinder.api.infrastracture.repositoryimpl;
 
 import com.fooqoo56.kyogofinder.api.domain.model.Relation;
 import com.fooqoo56.kyogofinder.api.domain.model.User;
+import com.fooqoo56.kyogofinder.api.domain.model.UserIds;
 import com.fooqoo56.kyogofinder.api.domain.repository.FirestoreRepository;
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.Query;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -27,7 +33,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeUser(final User user, final Integer userId) throws ExecutionException, InterruptedException {
+    public void writeUser(final User user, final Integer userId)
+            throws ExecutionException, InterruptedException {
         final WriteResult writeResult =
                 this.firestore.document(getPathOfUser(userId)).set(user).get();
 
@@ -43,6 +50,26 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                 this.firestore.document(getPathOfUser(id)).get();
 
         return documentFuture.get().toObject(User.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UserIds getOldestUserId() throws ExecutionException, InterruptedException {
+        final CollectionReference collection = this.firestore.collection(BASE_PATH + "relation");
+
+        ApiFuture<QuerySnapshot> querySnapshot = collection
+                .orderBy("updatedAt", Query.Direction.DESCENDING)
+                .limit(1)
+                .get();
+
+        final List<Integer> userIds =
+                querySnapshot.get().getDocuments().stream().map(e -> Integer.parseInt(e.getId()))
+                        .collect(
+                                Collectors.toList());
+
+        return new UserIds(userIds);
     }
 
     /**

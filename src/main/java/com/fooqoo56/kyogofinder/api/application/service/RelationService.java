@@ -104,21 +104,4 @@ public class RelationService {
             throw new FirestoreException(e.getMessage());
         }
     }
-
-    /**
-     * RelationのFollowerのFriendにユーザが存在するか
-     *
-     * @param id ユーザID
-     * @return ユーザの有無
-     */
-    public boolean isExistRelationFollowerFriend(final Integer id, final Integer followerId,
-                                                 final Integer followerFriendId) {
-        try {
-            final Relation relation =
-                    fireStoreRepository.getRelationFollowerFriend(id, followerId, followerFriendId);
-            return Objects.nonNull(relation);
-        } catch (final Exception e) {
-            return false;
-        }
-    }
 }

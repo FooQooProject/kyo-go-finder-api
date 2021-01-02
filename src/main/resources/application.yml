@@ -13,7 +13,7 @@ spring:
       firestore:
         enabled: true
         credentials:
-          location: classpath:kyo-go-finder-firebase-service-account.json
+          location: classpath:kyo-go-finder-firebase-adminsdk.json
       project-id: kyo-go-finder
 
 server:

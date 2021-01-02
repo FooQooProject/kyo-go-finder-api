@@ -4,10 +4,12 @@ import com.fooqoo56.kyogofinder.api.application.exception.ValidationException;
 import com.fooqoo56.kyogofinder.api.application.service.RelationService;
 import com.fooqoo56.kyogofinder.api.application.service.UserService;
 import com.fooqoo56.kyogofinder.api.domain.model.User;
+import com.fooqoo56.kyogofinder.api.domain.model.UserIds;
 import com.fooqoo56.kyogofinder.api.presentation.dto.form.UserRequest;
 import com.fooqoo56.kyogofinder.api.presentation.dto.response.ApiResponse;
 import com.fooqoo56.kyogofinder.api.presentation.validation.RegisterdId;
 import com.fooqoo56.kyogofinder.api.presentation.validation.RequestValidator;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,7 +33,7 @@ public class UserController {
     private final RequestValidator validator;
 
     /**
-     * ユーザの取得
+     * ID指定のユーザの取得
      *
      * @param id ユーザID
      * @return APIレスポンス
@@ -40,6 +42,17 @@ public class UserController {
     @ResponseBody
     public ApiResponse<User> getUser(@PathVariable("id") final Integer id) {
         return userService.getUser(id);
+    }
+
+    /**
+     * 条件指定のユーザの取得
+     *
+     * @return APIレスポンス
+     */
+    @GetMapping(path = "/user/oldest")
+    @ResponseBody
+    public ApiResponse<UserIds> getUser() {
+        return userService.getUsers();
     }
 
     /**
