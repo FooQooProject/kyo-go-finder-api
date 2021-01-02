@@ -9,7 +9,6 @@ import com.fooqoo56.kyogofinder.api.presentation.dto.form.UserRequest;
 import com.fooqoo56.kyogofinder.api.presentation.dto.response.ApiResponse;
 import com.fooqoo56.kyogofinder.api.presentation.validation.RegisterdId;
 import com.fooqoo56.kyogofinder.api.presentation.validation.RequestValidator;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,7 +39,7 @@ public class UserController {
      */
     @GetMapping(path = "/user/{id}")
     @ResponseBody
-    public ApiResponse<User> getUser(@PathVariable("id") final Integer id) {
+    public ApiResponse<User> getUser(@PathVariable("id") final String id) {
         return userService.getUser(id);
     }
 
@@ -64,7 +63,7 @@ public class UserController {
      */
     @PostMapping(path = "/user/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<User> postUser(@PathVariable("id") final Integer id,
+    public ApiResponse<User> postUser(@PathVariable("id") final String id,
                                       final UserRequest userRequest) {
         final ApiResponse<User> response = userService.postUser(userRequest, id);
         relationService.createRelation(id);
@@ -82,8 +81,8 @@ public class UserController {
      */
     @PostMapping(path = "/user/{id}/follower/{followerId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<User> postUser(@PathVariable("id") @RegisterdId final Integer id,
-                                      @PathVariable("followerId") final Integer followerId,
+    public ApiResponse<User> postUser(@PathVariable("id") @RegisterdId final String id,
+                                      @PathVariable("followerId") final String followerId,
                                       final UserRequest userRequest) throws ValidationException {
         if (validator.validateFollowerRequest(id, followerId)) {
             final ApiResponse<User> response = userService.postUser(userRequest, followerId);
@@ -109,11 +108,11 @@ public class UserController {
      */
     @PostMapping(path = "/user/{id}/follower/{followerId}/friend/{followerFriendId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<User> postUser(@PathVariable("id") @RegisterdId final Integer id,
+    public ApiResponse<User> postUser(@PathVariable("id") @RegisterdId final String id,
                                       @PathVariable("followerId") @RegisterdId
-                                      final Integer followerId,
+                                      final String followerId,
                                       @PathVariable("followerFriendId")
-                                      final Integer followerFriendId,
+                                      final String followerFriendId,
                                       final UserRequest userRequest) throws ValidationException {
         if (validator.validateFollowerFriendRequest(id, followerId)) {
             final ApiResponse<User> response = userService.postUser(userRequest, followerFriendId);

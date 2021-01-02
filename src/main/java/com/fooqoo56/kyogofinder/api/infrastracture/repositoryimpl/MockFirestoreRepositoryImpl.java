@@ -20,14 +20,14 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeUser(final User user, final Integer userId) {
+    public void writeUser(final User user, final String userId) {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public User getUser(final Integer id) {
+    public User getUser(final String id) {
         return new User();
     }
 
@@ -43,7 +43,7 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeRelationUser(final Relation relation, final Integer userId) {
+    public void writeRelationUser(final Relation relation, final String userId) {
 
     }
 
@@ -51,7 +51,7 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public Relation getRelationUser(final Integer userId) {
+    public Relation getRelationUser(final String userId) {
         return new Relation();
     }
 
@@ -59,8 +59,8 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeRelationFollower(final Relation relation, final Integer userId,
-                                      final Integer followerId) {
+    public void writeRelationFollower(final Relation relation, final String userId,
+                                      final String followerId) {
 
     }
 
@@ -68,7 +68,7 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public Relation getRelationFollower(final Integer userId, final Integer followerId) {
+    public Relation getRelationFollower(final String userId, final String followerId) {
         return new Relation();
     }
 
@@ -77,8 +77,8 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      */
     @Override
     public void writeRelationFollowerFriend(
-            final Relation relation, final Integer userId, final Integer followerId,
-            final Integer friendId) {
+            final Relation relation, final String userId, final String followerId,
+            final String friendId) {
 
     }
 
@@ -86,8 +86,8 @@ public class MockFirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public Relation getRelationFollowerFriend(final Integer userId, final Integer followerId,
-                                              final Integer friendId) {
+    public Relation getRelationFollowerFriend(final String userId, final String followerId,
+                                              final String friendId) {
         return new Relation();
     }
 }

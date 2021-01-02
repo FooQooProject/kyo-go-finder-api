@@ -9,5 +9,5 @@ import lombok.Value;
 @AllArgsConstructor
 public class UserIds implements Serializable {
 
-    List<Integer> userIds;
+    List<String> userIds;
 }

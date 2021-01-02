@@ -22,7 +22,7 @@ public class RelationService {
      * @param userId ユーザID
      * @throws FirestoreException FireStoreの独自例外
      */
-    public void createRelation(final Integer userId)
+    public void createRelation(final String userId)
             throws FirestoreException {
 
         try {
@@ -38,7 +38,7 @@ public class RelationService {
      * @param id ユーザID
      * @return ユーザの有無
      */
-    public boolean isExistRelationUser(final Integer id) {
+    public boolean isExistRelationUser(final String id) {
         try {
             final Relation relation = fireStoreRepository.getRelationUser(id);
             return Objects.nonNull(relation);
@@ -54,7 +54,7 @@ public class RelationService {
      * @param followerId フォロワーのID
      * @throws FirestoreException FireStoreの独自例外
      */
-    public void createFollower(final Integer userId, final Integer followerId)
+    public void createFollower(final String userId, final String followerId)
             throws FirestoreException {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
@@ -73,7 +73,7 @@ public class RelationService {
      * @param id ユーザID
      * @return ユーザの有無
      */
-    public boolean isExistRelationFollower(final Integer id, final Integer followerId) {
+    public boolean isExistRelationFollower(final String id, final String followerId) {
         try {
             final Relation relation = fireStoreRepository.getRelationFollower(id, followerId);
             return Objects.nonNull(relation);
@@ -91,7 +91,7 @@ public class RelationService {
      * @throws FirestoreException FireStoreの独自例外
      */
     public void createFollowerFriend(
-            final Integer userId, final Integer followerId, final Integer followerFriendId)
+            final String userId, final String followerId, final String followerFriendId)
             throws FirestoreException {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();

@@ -77,7 +77,7 @@ class UserControllerSpec extends Specification {
                 .build()
 
         final apiResponse = new ApiResponse(1.00, LocalDateTime.now(), user)
-        userService.postUser(_ as UserRequest, _ as Integer) >> apiResponse
+        userService.postUser(_ as UserRequest, _ as String) >> apiResponse
 
         when:
         final actual = mockMvc.perform(

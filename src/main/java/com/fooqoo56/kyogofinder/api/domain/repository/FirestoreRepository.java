@@ -3,7 +3,6 @@ package com.fooqoo56.kyogofinder.api.domain.repository;
 import com.fooqoo56.kyogofinder.api.domain.model.Relation;
 import com.fooqoo56.kyogofinder.api.domain.model.User;
 import com.fooqoo56.kyogofinder.api.domain.model.UserIds;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public interface FirestoreRepository {
@@ -16,7 +15,7 @@ public interface FirestoreRepository {
      * @throws ExecutionException   ExecutionException
      * @throws InterruptedException InterruptedException
      */
-    User getUser(final Integer id) throws ExecutionException, InterruptedException;
+    User getUser(final String id) throws ExecutionException, InterruptedException;
 
     /**
      * ユーザの取得(リスト)
@@ -34,7 +33,7 @@ public interface FirestoreRepository {
      * @throws ExecutionException   ExecutionException
      * @throws InterruptedException InterruptedException
      */
-    void writeUser(final User user, final Integer userId)
+    void writeUser(final User user, final String userId)
             throws ExecutionException, InterruptedException;
 
     /**
@@ -44,7 +43,7 @@ public interface FirestoreRepository {
      * @throws ExecutionException   ExecutionException
      * @throws InterruptedException InterruptedException
      */
-    Relation getRelationUser(final Integer userId)
+    Relation getRelationUser(final String userId)
             throws ExecutionException, InterruptedException;
 
     /**
@@ -55,7 +54,7 @@ public interface FirestoreRepository {
      * @throws ExecutionException   ExecutionException
      * @throws InterruptedException InterruptedException
      */
-    void writeRelationUser(final Relation relation, final Integer userId)
+    void writeRelationUser(final Relation relation, final String userId)
             throws ExecutionException, InterruptedException;
 
     /**
@@ -66,8 +65,8 @@ public interface FirestoreRepository {
      * @throws ExecutionException   ExecutionException
      * @throws InterruptedException InterruptedException
      */
-    Relation getRelationFollower(final Integer userId,
-                                 final Integer followerId)
+    Relation getRelationFollower(final String userId,
+                                 final String followerId)
             throws ExecutionException, InterruptedException;
 
     /**
@@ -79,8 +78,8 @@ public interface FirestoreRepository {
      * @throws ExecutionException   ExecutionException
      * @throws InterruptedException InterruptedException
      */
-    void writeRelationFollower(final Relation relation, final Integer userId,
-                               final Integer followerId)
+    void writeRelationFollower(final Relation relation, final String userId,
+                               final String followerId)
             throws ExecutionException, InterruptedException;
 
     /**
@@ -92,8 +91,8 @@ public interface FirestoreRepository {
      * @throws ExecutionException   ExecutionException
      * @throws InterruptedException InterruptedException
      */
-    Relation getRelationFollowerFriend(final Integer userId,
-                                       final Integer followerId, final Integer friendId)
+    Relation getRelationFollowerFriend(final String userId,
+                                       final String followerId, final String friendId)
             throws ExecutionException, InterruptedException;
 
     /**
@@ -106,7 +105,7 @@ public interface FirestoreRepository {
      * @throws ExecutionException   ExecutionException
      * @throws InterruptedException InterruptedException
      */
-    void writeRelationFollowerFriend(final Relation relation, final Integer userId,
-                                     final Integer followerId, final Integer friendId)
+    void writeRelationFollowerFriend(final Relation relation, final String userId,
+                                     final String followerId, final String friendId)
             throws ExecutionException, InterruptedException;
 }

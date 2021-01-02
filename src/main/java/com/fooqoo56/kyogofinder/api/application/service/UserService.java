@@ -26,7 +26,7 @@ public class UserService {
      *
      * @return APIレスポンス
      */
-    public ApiResponse<User> getUser(final Integer id) throws FirestoreException {
+    public ApiResponse<User> getUser(final String id) throws FirestoreException {
         final StopWatch stopWatch = new StopWatch();
 
         stopWatch.start();
@@ -61,7 +61,7 @@ public class UserService {
      * @param request ユーザ情報
      * @return APIレスポンス
      */
-    public ApiResponse<User> postUser(final UserRequest request, final Integer userId)
+    public ApiResponse<User> postUser(final UserRequest request, final String userId)
             throws FirestoreException {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
@@ -82,7 +82,7 @@ public class UserService {
      * @param id ユーザID
      * @return ユーザの有無
      */
-    public boolean isExistUser(final Integer id) {
+    public boolean isExistUser(final String id) {
         try {
             final User user = fireStoreRepository.getUser(id);
             return Objects.nonNull(user);

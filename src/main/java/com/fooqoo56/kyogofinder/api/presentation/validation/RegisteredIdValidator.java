@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class RegisteredIdValidator implements ConstraintValidator<RegisterdId, Integer> {
+public class RegisteredIdValidator implements ConstraintValidator<RegisterdId, String> {
 
     final UserService userService;
 
@@ -18,7 +18,7 @@ public class RegisteredIdValidator implements ConstraintValidator<RegisterdId, I
      * @return バリデーション結果
      */
     @Override
-    public boolean isValid(final Integer value, final ConstraintValidatorContext context) {
+    public boolean isValid(final String value, final ConstraintValidatorContext context) {
         return userService.isExistUser(value);
     }
 }

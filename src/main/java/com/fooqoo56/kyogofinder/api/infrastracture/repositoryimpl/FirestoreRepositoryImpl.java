@@ -33,7 +33,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeUser(final User user, final Integer userId)
+    public void writeUser(final User user, final String userId)
             throws ExecutionException, InterruptedException {
         final WriteResult writeResult =
                 this.firestore.document(getPathOfUser(userId)).set(user).get();
@@ -45,7 +45,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public User getUser(final Integer id) throws ExecutionException, InterruptedException {
+    public User getUser(final String id) throws ExecutionException, InterruptedException {
         final ApiFuture<DocumentSnapshot> documentFuture =
                 this.firestore.document(getPathOfUser(id)).get();
 
@@ -64,8 +64,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                 .limit(1)
                 .get();
 
-        final List<Integer> userIds =
-                querySnapshot.get().getDocuments().stream().map(e -> Integer.parseInt(e.getId()))
+        final List<String> userIds =
+                querySnapshot.get().getDocuments().stream().map(DocumentSnapshot::getId)
                         .collect(
                                 Collectors.toList());
 
@@ -76,7 +76,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeRelationUser(final Relation relation, final Integer userId)
+    public void writeRelationUser(final Relation relation, final String userId)
             throws ExecutionException, InterruptedException {
         final WriteResult writeResult =
                 this.firestore.document(getPathOfRelationUser(userId)).set(relation)
@@ -89,7 +89,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public Relation getRelationUser(final Integer userId)
+    public Relation getRelationUser(final String userId)
             throws ExecutionException, InterruptedException {
         final ApiFuture<DocumentSnapshot> documentFuture =
                 this.firestore.document(getPathOfRelationUser(userId)).get();
@@ -101,8 +101,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public void writeRelationFollower(final Relation relation, final Integer userId,
-                                      final Integer followerId)
+    public void writeRelationFollower(final Relation relation, final String userId,
+                                      final String followerId)
             throws ExecutionException, InterruptedException {
 
         final WriteResult writeResult =
@@ -117,7 +117,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public Relation getRelationFollower(final Integer userId, final Integer followerId)
+    public Relation getRelationFollower(final String userId, final String followerId)
             throws ExecutionException, InterruptedException {
 
         final ApiFuture<DocumentSnapshot> documentFuture =
@@ -131,8 +131,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      */
     @Override
     public void writeRelationFollowerFriend(
-            final Relation relation, final Integer userId, final Integer followerId,
-            final Integer friendId) throws ExecutionException, InterruptedException {
+            final Relation relation, final String userId, final String followerId,
+            final String friendId) throws ExecutionException, InterruptedException {
 
         final WriteResult writeResult =
                 this.firestore
@@ -148,8 +148,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * {@inheritDoc}
      */
     @Override
-    public Relation getRelationFollowerFriend(final Integer userId, final Integer followerId,
-                                              final Integer friendId)
+    public Relation getRelationFollowerFriend(final String userId, final String followerId,
+                                              final String friendId)
             throws ExecutionException, InterruptedException {
 
         final ApiFuture<DocumentSnapshot> documentFuture =
@@ -166,7 +166,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * @param id ユーザID
      * @return パス
      */
-    private String getPathOfUser(final Integer id) {
+    private String getPathOfUser(final String id) {
         return String.format(BASE_PATH + "user/%s", id);
     }
 
@@ -176,7 +176,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * @param id ユーザID
      * @return パス
      */
-    private String getPathOfRelationUser(final Integer id) {
+    private String getPathOfRelationUser(final String id) {
         return String.format(BASE_PATH + "relation/%s", id);
     }
 
@@ -187,7 +187,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * @param followerId フォロワーのユーザID
      * @return パス
      */
-    private String getPathOfRelationFollower(final Integer id, final Integer followerId) {
+    private String getPathOfRelationFollower(final String id, final String followerId) {
         return String.format(BASE_PATH + "relation/%s/follower/%s", id, followerId);
     }
 
@@ -199,8 +199,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
      * @param followerFriendId フォロワーのフォローしてるユーザのID
      * @return パス
      */
-    private String getPathOfRelationFollowerFriend(final Integer id, final Integer followerId,
-                                                   final Integer followerFriendId) {
+    private String getPathOfRelationFollowerFriend(final String id, final String followerId,
+                                                   final String followerFriendId) {
         return String.format(BASE_PATH + "relation/%s/follower/%s/friend/%s", id, followerId,
                 followerFriendId);
     }
