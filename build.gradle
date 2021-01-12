@@ -4,7 +4,7 @@ buildscript {
     }
     dependencies {
         // Spring Boot Gradle Plugin を使用
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.2.0.RELEASE'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.4.1'
         // Google App Engine Gradle plugin を使用
         classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.4.1'
     }
